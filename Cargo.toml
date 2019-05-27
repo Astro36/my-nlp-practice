@@ -1,0 +1,7 @@
+[package]
+name = "my-nlp-practice"
+version = "0.1.0"
+authors = ["Seungjae Park <astro.psj@gmail.com>"]
+edition = "2018"
+
+[dependencies]
