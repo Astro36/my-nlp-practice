@@ -7,7 +7,7 @@ pub struct Dictionary<'a> {
     size: u32,
 }
 
-impl<'a> Debug for Dictionary<'a> {
+impl Debug for Dictionary<'_> {
     fn fmt(&self, f: &mut Formatter) -> Result {
         write!(f, "Dictionary {:#?}", self.indexes)
     }
@@ -27,7 +27,7 @@ impl<'a> Extend<&'a str> for Dictionary<'a> {
 }
 
 impl<'a> FromIterator<&'a str> for Dictionary<'a> {
-    fn from_iter<I: IntoIterator<Item = &'a str>>(tokens: I) -> Dictionary<'a> {
+    fn from_iter<I: IntoIterator<Item = &'a str>>(tokens: I) -> Self {
         let mut indexes = HashMap::new();
         let mut max = 0;
         for token in tokens {
@@ -41,15 +41,15 @@ impl<'a> FromIterator<&'a str> for Dictionary<'a> {
 }
 
 
-impl<'a> Dictionary<'a> {
-    pub fn new() -> Dictionary<'a> {
+impl Dictionary<'_> {
+    pub fn new() -> Self {
         Dictionary {
             indexes: HashMap::new(),
             size: 0,
         }
     }
 
-    pub fn get(&self, token: &'a str) -> u32 {
+    pub fn get(&self, token: &str) -> u32 {
         match self.indexes.get(&token) {
             Some(index) => *index,
             None => 0,
@@ -65,7 +65,7 @@ pub struct FrequencyDistribution<'a> {
     frequencies: std::collections::HashMap<&'a str, u32>,
 }
 
-impl<'a> Debug for FrequencyDistribution<'a> {
+impl Debug for FrequencyDistribution<'_> {
     fn fmt(&self, f: &mut Formatter) -> Result {
         write!(f, "FrequencyDistribution {:#?}", self.frequencies)
     }
@@ -81,7 +81,7 @@ impl<'a> Extend<&'a str> for FrequencyDistribution<'a> {
 }
 
 impl<'a> FromIterator<&'a str> for FrequencyDistribution<'a> {
-    fn from_iter<I: IntoIterator<Item = &'a str>>(tokens: I) -> FrequencyDistribution<'a> {
+    fn from_iter<I: IntoIterator<Item = &'a str>>(tokens: I) -> Self {
         let mut frequencies = HashMap::new();
         for token in tokens {
             let frequency = frequencies.get(&token).unwrap_or(&0) + 1;
@@ -91,14 +91,14 @@ impl<'a> FromIterator<&'a str> for FrequencyDistribution<'a> {
     }
 }
 
-impl<'a> FrequencyDistribution<'a> {
-    pub fn new() -> FrequencyDistribution<'a> {
+impl FrequencyDistribution<'_> {
+    pub fn new() -> Self {
         FrequencyDistribution {
             frequencies: HashMap::new(),
         }
     }
 
-    pub fn get(&self, token: &'a str) -> u32 {
+    pub fn get(&self, token: &str) -> u32 {
         match self.frequencies.get(&token) {
             Some(frequency) => *frequency,
             None => 0,
