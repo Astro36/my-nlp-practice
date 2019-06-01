@@ -18,8 +18,8 @@ impl<'a> Extend<&'a str> for Dictionary<'a> {
         let mut max = self.size;
         for token in tokens {
             if !self.indexes.contains_key(&token) {
-                max += 1;
                 self.indexes.insert(token, max);
+                max += 1;
             }
         }
         self.size = max;
@@ -32,8 +32,8 @@ impl<'a> FromIterator<&'a str> for Dictionary<'a> {
         let mut max = 0;
         for token in tokens {
             if !indexes.contains_key(&token) {
-                max += 1;
                 indexes.insert(token, max);
+                max += 1;
             }
         }
         Dictionary { indexes, size: max }
@@ -54,6 +54,14 @@ impl Dictionary<'_> {
             Some(index) => *index,
             None => 0,
         }
+    }
+
+    pub fn keys(&self) -> Vec<String> {
+        let mut keys = vec![];
+        for &k in self.indexes.keys() {
+            keys.push(k.to_string());
+        }
+        keys
     }
 
     pub fn size(&self) -> usize {
@@ -103,5 +111,13 @@ impl FrequencyDistribution<'_> {
             Some(frequency) => *frequency,
             None => 0,
         }
+    }
+
+    pub fn keys(&self) -> Vec<String> {
+        let mut keys = vec![];
+        for &k in self.frequencies.keys() {
+            keys.push(k.to_string());
+        }
+        keys
     }
 }
